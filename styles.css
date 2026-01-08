@@ -1,0 +1,157 @@
+:root{
+  --bg: linear-gradient(135deg,#ffe6f0 0%, #fff0f7 100%);
+  --accent: #ff4d79;
+  --text: #2b2b2b;
+  /* global heart size used by .hero and .heart; can be constrained by viewport height */
+  --heart-size: min(clamp(140px, 22vw, 260px), 70vh);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.container{
+  text-align:center;
+  max-width:900px;
+  width:100%;
+}
+
+/* Heart using CSS with pseudo elements */
+.heart{
+  width:var(--heart-size);
+  height:var(--heart-size);
+  position:relative;
+  margin:0 auto;
+  z-index:0;
+  transform:rotate(-45deg);
+  background:var(--accent);
+  border-radius:20px 20px 0 0;
+  animation:beat 1s ease-in-out infinite;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+.heart::before,
+.heart::after{
+  content: "";
+  position: absolute;
+  /* use the same size as the main .heart so the lobes are perfectly round */
+  width: var(--heart-size);
+  height: var(--heart-size);
+  border-radius: 50%;
+  background: var(--accent);
+}
+/* position the circular lobes above the rotated square so the shape reads as a heart */
+.heart::before{ top: -45%; left: 0% }
+.heart::after{ top: -0%; left: 50% }
+
+@keyframes beat{
+  0%{ transform: rotate(-45deg) scale(1) }
+  25%{ transform: rotate(-45deg) scale(1.06) }
+  50%{ transform: rotate(-45deg) scale(1) }
+  75%{ transform: rotate(-45deg) scale(1.06) }
+  100%{ transform: rotate(-45deg) scale(1) }
+}
+
+/* hero container to separate the heart and avoid overlap */
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  /* more top padding so the rounded lobes are visible */
+  padding: clamp(18px, 6vw, 64px) 18px;
+  max-width:900px;
+  margin: 0 auto 18px;
+  border-radius:8px;
+  background: rgba(255,255,255,0.55);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+  /* ensure the hero is at least tall enough for the heart and breathing room */
+  min-height: calc(var(--heart-size) + 48px);
+  overflow:visible; /* allow the rounded lobes to be shown fully */
+}
+.hero-inner{ display:flex; align-items:center; justify-content:center; width:100% }
+.content{ max-width:900px; margin: 0 auto; padding: 6px 18px }
+.name{
+  font-size: clamp(20px, 4.2vw, 34px);
+  margin-top: 8px;
+  letter-spacing:0.4px;
+}
+.subtitle{
+  font-size: clamp(16px, 3.6vw, 26px);
+  margin-top:8px;
+  color:#b3003b;
+  position:relative;
+  z-index:1;
+}
+.author{
+  margin-top:18px;
+  font-size:clamp(12px, 2.2vw, 16px);
+  opacity:0.9;
+  text-align:left;
+  max-width:720px;
+  margin-left:auto;
+  margin-right:auto;
+  position:relative;
+  z-index:1;
+}
+.smallnote{
+  margin-top:8px;
+  font-size:11px;
+  color:#444;
+  opacity:0.85;
+  text-align:left;
+  max-width:720px;
+  margin-left:auto;
+  margin-right:auto;
+  position:relative;
+  z-index:1;
+}
+.victoria{
+  font-weight:600;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .heart{ animation:none }
+}
+
+/* Layout tweaks for very small screens */
+@media (max-width:420px){
+  .heart{ margin-bottom:16px }
+  .container{ padding:8px }
+}
+
+/* Very small screens: make heart smaller and text slightly smaller */
+@media (max-width:380px){
+  .hero{ --heart-size: 120px; }
+  .heart{ margin-bottom:12px; }
+  .name{ font-size: clamp(16px, 6.5vw, 20px); }
+  .subtitle{ font-size: clamp(14px, 5.5vw, 16px); }
+  /* Move author and small note to the right edge and make smaller */
+  .author, .smallnote{
+    width:100%;
+    max-width:none;
+    text-align:right;
+    margin-left:0;
+    margin-right:0;
+    font-size:11px;
+  }
+  .smallnote{ font-size:10px }
+}
+
+/* Pulse effect: a quick stronger beat layered over the regular beat */
+@keyframes pulse {
+  0% { transform: rotate(-45deg) scale(1) }
+  50% { transform: rotate(-45deg) scale(1.18) }
+  100% { transform: rotate(-45deg) scale(1) }
+}
+
+/* When .pulse is toggled, add a one-shot pulse animation in addition to the regular beat */
+.heart.pulse{
+  animation: beat 1s ease-in-out infinite, pulse 320ms ease-in-out 1;
+}
+
