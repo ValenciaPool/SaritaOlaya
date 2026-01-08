@@ -32,7 +32,7 @@ body{
   transform:rotate(-45deg);
   background:var(--accent);
   border-radius:20px 20px 0 0;
-  animation:beat 1s ease-in-out infinite;
+  animation:beat 2s ease-in-out infinite;
   box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 .heart::before,
@@ -81,11 +81,13 @@ body{
   letter-spacing:0.4px;
 }
 .subtitle{
-  font-size: clamp(16px, 3.6vw, 26px);
-  margin-top:8px;
+  font-size: clamp(15px, 3.2vw, 18px);
+  margin-top:12px;
   color:#b3003b;
   position:relative;
   z-index:1;
+  line-height:1.55;
+  text-align:center;
 }
 .author{
   margin-top:18px;
@@ -120,6 +122,12 @@ body{
 }
 
 /* Layout tweaks for very small screens */
+@media (max-width:600px){
+  /* make the heart larger on phones so it reads prominent */
+  .hero{ --heart-size: min(180px, 44vw); }
+  .container{ padding:10px }
+}
+
 @media (max-width:420px){
   .heart{ margin-bottom:16px }
   .container{ padding:8px }
@@ -127,10 +135,11 @@ body{
 
 /* Very small screens: make heart smaller and text slightly smaller */
 @media (max-width:380px){
-  .hero{ --heart-size: 120px; }
+  /* slightly reduce again for very narrow phones while keeping it relatively large */
+  .hero{ --heart-size: min(160px, 46vw); }
   .heart{ margin-bottom:12px; }
   .name{ font-size: clamp(16px, 6.5vw, 20px); }
-  .subtitle{ font-size: clamp(14px, 5.5vw, 16px); }
+  .subtitle{ font-size: clamp(14px, 4.8vw, 16px); }
   /* Move author and small note to the right edge and make smaller */
   .author, .smallnote{
     width:100%;
