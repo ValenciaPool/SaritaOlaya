@@ -3,7 +3,8 @@
   --accent: #ff4d79;
   --text: #2b2b2b;
   /* global heart size used by .hero and .heart; can be constrained by viewport height */
-  --heart-size: min(clamp(140px, 22vw, 260px), 70vh);
+  /* smaller default so heart fits the viewport and leaves room for text */
+  --heart-size: min(25vw, 25vh, 420px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -70,7 +71,7 @@ body{
   background: rgba(255,255,255,0.55);
   box-shadow: 0 8px 28px rgba(0,0,0,0.06);
   /* ensure the hero is at least tall enough for the heart and breathing room */
-  min-height: calc(var(--heart-size) + 48px);
+  min-height: calc(var(--heart-size) + 22px);
   overflow:visible; /* allow the rounded lobes to be shown fully */
 }
 .hero-inner{ display:flex; align-items:center; justify-content:center; width:100% }
@@ -82,8 +83,8 @@ body{
 }
 .subtitle{
   font-size: clamp(15px, 3.2vw, 18px);
-  margin-top:12px;
-  color:#b3003b;
+  margin-top:14px;
+  color:#9a0034;
   position:relative;
   z-index:1;
   line-height:1.55;
@@ -102,7 +103,7 @@ body{
 }
 .smallnote{
   margin-top:8px;
-  font-size:11px;
+  font-size:12px;
   color:#444;
   opacity:0.85;
   text-align:left;
@@ -139,7 +140,7 @@ body{
   .hero{ --heart-size: min(160px, 46vw); }
   .heart{ margin-bottom:12px; }
   .name{ font-size: clamp(16px, 6.5vw, 20px); }
-  .subtitle{ font-size: clamp(14px, 4.8vw, 16px); }
+  .subtitle{ font-size: clamp(15px, 4.8vw, 16px); }
   /* Move author and small note to the right edge and make smaller */
   .author, .smallnote{
     width:100%;
